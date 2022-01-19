@@ -1,12 +1,14 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { Suspense } from 'react';
-import { AlwaysSuspend } from '../src/components/AlwaysSuspend';
+import { Suspense, useState } from 'react';
 import { NoSSR } from '../src/components/NoSSR';
+import { RenderingNotifier } from '../src/components/RenderingNotifier';
 import { SometimesSuspend } from '../src/components/SometimesSuspend';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
+  const [count, setCount] = useState(0);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -20,8 +22,16 @@ export default function Home() {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
         <NoSSR>
+          <RenderingNotifier name="outside-Suspense" />
           <Suspense fallback={<p>Loading ...</p>}>
             <SometimesSuspend />
+            <RenderingNotifier name="inside-Suspense" />
+            <button
+              className="border p-1"
+              onClick={() => setCount((c) => c + 1)}
+            >
+              {count}
+            </button>
           </Suspense>
         </NoSSR>
       </main>
