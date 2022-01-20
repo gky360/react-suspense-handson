@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { Suspense, useState } from 'react';
+import { DataLoader } from '../src/components/DataLoader';
 import { NoSSR } from '../src/components/NoSSR';
 import { RenderingNotifier } from '../src/components/RenderingNotifier';
 import { SometimesSuspend } from '../src/components/SometimesSuspend';
@@ -23,7 +24,7 @@ export default function Home() {
         </h1>
         <NoSSR>
           <RenderingNotifier name="outside-Suspense" />
-          <Suspense fallback={<p>Loading ...</p>}>
+          <Suspense fallback={<p>Test ...</p>}>
             <SometimesSuspend />
             <RenderingNotifier name="inside-Suspense" />
             <button
@@ -32,6 +33,9 @@ export default function Home() {
             >
               {count}
             </button>
+          </Suspense>
+          <Suspense fallback={<p>Loading ...</p>}>
+            <DataLoader />
           </Suspense>
         </NoSSR>
       </main>
