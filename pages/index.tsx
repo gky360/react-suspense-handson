@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { Suspense, useState } from 'react';
-import { DataLoader } from '../src/components/DataLoader';
+import { DataLoader1, DataLoader2 } from '../src/components/DataLoader';
 import { NoSSR } from '../src/components/NoSSR';
 import { RenderingNotifier } from '../src/components/RenderingNotifier';
 import { SometimesSuspend } from '../src/components/SometimesSuspend';
@@ -35,7 +35,8 @@ export default function Home() {
             </button>
           </Suspense>
           <Suspense fallback={<p>Loading ...</p>}>
-            <DataLoader />
+            <DataLoader1 />
+            <DataLoader2 />
           </Suspense>
         </NoSSR>
       </main>
