@@ -1,31 +1,14 @@
-import { fetchData1 } from '../utils';
+import { Loadable } from '../utils';
 
-const dataMap: Map<string, string> = new Map();
+export interface DataLoaderProps {
+  data: Loadable<string>;
+}
 
-const useData1 = (cacheKey: string): string => {
-  const cachedData = dataMap.get(cacheKey);
-  if (cachedData === undefined) {
-    throw fetchData1().then((d) => dataMap.set(cacheKey, d));
-  }
-  return cachedData;
-};
-
-export interface DataLoaderProps {}
-
-export const DataLoader1 = ({}: DataLoaderProps): JSX.Element | null => {
-  const data = useData1('DataLoader1');
+export const DataLoader = ({ data }: DataLoaderProps): JSX.Element | null => {
+  const value = data.getOrThrow();
   return (
     <div>
-      <div>Data is {data}</div>
-    </div>
-  );
-};
-
-export const DataLoader2 = ({}: DataLoaderProps): JSX.Element | null => {
-  const data = useData1('DataLoader2');
-  return (
-    <div>
-      <div>Data is {data}</div>
+      <div>Data is {value}</div>
     </div>
   );
 };

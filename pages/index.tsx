@@ -1,14 +1,16 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { Suspense, useState } from 'react';
-import { DataLoader1, DataLoader2 } from '../src/components/DataLoader';
+import { DataLoader } from '../src/components/DataLoader';
 import { NoSSR } from '../src/components/NoSSR';
 import { RenderingNotifier } from '../src/components/RenderingNotifier';
-import { SometimesSuspend } from '../src/components/SometimesSuspend';
+import { fetchData1, Loadable } from '../src/utils';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
-  const [count, setCount] = useState(0);
+  const [data1, setData1] = useState(() => new Loadable(fetchData1()));
+  const [data2, setData2] = useState(() => new Loadable(fetchData1()));
+  const [data3, setData3] = useState(() => new Loadable(fetchData1()));
 
   return (
     <div className={styles.container}>
@@ -24,19 +26,14 @@ export default function Home() {
         </h1>
         <NoSSR>
           <RenderingNotifier name="outside-Suspense" />
-          <Suspense fallback={<p>Test ...</p>}>
-            <SometimesSuspend />
-            <RenderingNotifier name="inside-Suspense" />
-            <button
-              className="border p-1"
-              onClick={() => setCount((c) => c + 1)}
-            >
-              {count}
-            </button>
+          <Suspense fallback={<p>Loading ...</p>}>
+            <DataLoader data={data1} />
           </Suspense>
           <Suspense fallback={<p>Loading ...</p>}>
-            <DataLoader1 />
-            <DataLoader2 />
+            <DataLoader data={data2} />
+          </Suspense>
+          <Suspense fallback={<p>Loading ...</p>}>
+            <DataLoader data={data3} />
           </Suspense>
         </NoSSR>
       </main>
